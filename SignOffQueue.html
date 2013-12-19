@@ -3,8 +3,13 @@
 </head>
 
 <body>
-  {{> ta}}
+  {{> openingPage}}
 </body>
+
+<template name="openingPage">
+  <input type="button" id="ta" value="TA" /> <input type="button" id="student" value="Student" />
+  {{{showContent}}}
+</template>
 
 <template name="student">
 	{{#if showForm}}
