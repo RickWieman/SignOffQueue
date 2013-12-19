@@ -3,11 +3,29 @@
 </head>
 
 <body>
-  {{> hello}}
+  {{> ta}}
 </body>
 
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+<template name="student">
+	{{#if showForm}}
+  <h1>Wij willen afgetekend worden!</h1>
+  <form>
+  	<input type="text" id="loc" placeholder="Location" /><br />
+  	<input type="text" id="cpm" placeholder="CPM Groepsnummer" class="" /><br />
+  	{{cpmValidator}}
+  </form>
+  <input type="button" id="submit" value="Inschrijven" />
+  	{{/if}}
+
+  	<h1>De volgende studenten staan op de wachtrij:</h1>
+  	{{#each studentQueue}}
+  		<li>{{cpmGroup}}</li>
+  	{{/each}}
+</template>
+
+<template name="ta">
+	<h1>De volgende CPM-groep wil afgetekend worden:</h1>
+	{{student.cpmGroup}}
+
+	<input type="button" id="accept" value="Aannemen" />
 </template>
