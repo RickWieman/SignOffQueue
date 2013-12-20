@@ -3,7 +3,9 @@
 </head>
 
 <body>
-  {{> openingPage}}
+  <div class="container">
+    {{> openingPage}}
+  </div>
 </body>
 
 <template name="openingPage">
@@ -46,4 +48,26 @@
 	{{student.cpmGroup}}
 
 	<input type="button" class="btn" id="accept" value="Aannemen" />
+  <table class="table table-striped" id="queue">
+    <thead>
+      <th>Groep</th>
+      <th>Locatie</th>
+      <th></th>
+      <th></th>
+    </thead>
+    <tbody>
+      {{#each queue}}
+        {{> taQueueItem}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="taQueueItem">
+  <tr class="queue-item">
+    <td>{{cpmGroup}}</td>
+    <td>{{location}}</td>
+    <td><a>Goedkeuren</a></td>
+    <td><a>Afkeuren</a></td>
+  </tr>
 </template>
