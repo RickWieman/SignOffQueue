@@ -29,30 +29,43 @@ if (Meteor.isClient) {
   }
 
   Template.student.showForm = function() {
-    return !Session.get("subscribed");
+    return !Session.get("id");
   }
 
   Template.student.events({
     'click #submit' : function () {
       // template data, if any, is available in 'this'
-      var location = $('#loc').val();
-      var cpmGroup = $('#cpm').val();
+      var location = $('#inputLoc').val();
+      var cpmGroup = $('#inputCpm').val();
 
       if(location && cpmGroup) {
         if(Students.find({ cpmGroup: cpmGroup }).fetch().length == 0) {
-          Meteor.call("insertGroup", cpmGroup, location);
+          Meteor.call("insertGroup", cpmGroup, location, function(error, result){
+            if (error)
+              console.log(error);
+            else {
+              console.log("Group added with id: %s", result)
+              Session.set("id", result);
+            } 
+          });
         }
-        Session.set("subscribed", true);
+      } else {
+        console.log("Input not valid: %s %s", location, cpmGroup);
       }
     },
-    'keyup #cpm' : function() {
-      var cpmGroup = $('#cpm').val();
+    'keyup #inputCpm' : function() {
+      var cpmGroup = $('#inputCpm').val();
+      var results = Students.find({ cpmGroup: cpmGroup }).fetch();
 
-      if(Students.find({ cpmGroup: cpmGroup }).fetch().length != 0) {
-        $('#cpm').addClass('invalid');
+      if(results.length != 0) {
+        $('#cpm').addClass('error');
+        $('#cpm .controls').append('<span class="help-inline">CPM groep is al ingeschreven!</span>');
+        $('#submit').prop('disabled', true);
       }
       else {
-        $('#cpm').removeClass('invalid');
+        $('#cpm').removeClass('error');
+        $('#cpm .controls .help-inline').remove();
+        $('#submit').prop('disabled', false);
       }
     }
   });
@@ -68,8 +81,8 @@ if (Meteor.isServer) {
       Students.update({cpmGroup: cpmGroup}, {$set: {assistant: ta}});
     },
 
-    insertGroup: function(cpmGroup, location) {
-      Students.insert({cpmGroup: cpmGroup, location: location});
+    insertGroup: function(cpmGroup, location, callback) {
+      return Students.insert({cpmGroup: cpmGroup, location: location});
     },
 
     approveGroup: function(cpmGroup) {

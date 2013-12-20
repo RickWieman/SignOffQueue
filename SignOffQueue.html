@@ -7,30 +7,43 @@
 </body>
 
 <template name="openingPage">
-  <input type="button" id="ta" value="TA" /> <input type="button" id="student" value="Student" />
+  <input type="button" class="btn" id="ta" value="TA" /> <input type="button" class="btn" id="student" value="Student" />
   {{{showContent}}}
 </template>
 
 <template name="student">
 	{{#if showForm}}
   <h1>Wij willen afgetekend worden!</h1>
-  <form>
-  	<input type="text" id="loc" placeholder="Location" /><br />
-  	<input type="text" id="cpm" placeholder="CPM Groepsnummer" class="" /><br />
-  	{{cpmValidator}}
+  <form class="form-horizontal">
+    <div id="loc" class="control-group">
+      <label class="control-label" for="inputLoc">Locatie (cubicle)</label>
+      <div class="controls">
+        <input type="text" id="inputLoc" placeholder="Locatie">
+      </div>
+    </div>
+    <div id="cpm" class="control-group">
+      <label class="control-label" for="inputCpm">CPM Groepsnummer</label>
+      <div class="controls">
+        <input type="text" id="inputCpm" placeholder="Groepsnummer">
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn btn-primary" id="submit">Inschrijven</button>
+      </div>
+    </div>
   </form>
-  <input type="button" id="submit" value="Inschrijven" />
-  	{{/if}}
+  {{/if}}
 
-  	<h1>De volgende studenten staan op de wachtrij:</h1>
-  	{{#each studentQueue}}
-  		<li>{{cpmGroup}}</li>
-  	{{/each}}
+	<h1>De volgende studenten staan op de wachtrij:</h1>
+	{{#each studentQueue}}
+		<li>{{cpmGroup}}</li>
+	{{/each}}
 </template>
 
 <template name="ta">
 	<h1>De volgende CPM-groep wil afgetekend worden:</h1>
 	{{student.cpmGroup}}
 
-	<input type="button" id="accept" value="Aannemen" />
+	<input type="button" class="btn" id="accept" value="Aannemen" />
 </template>
