@@ -11,3 +11,12 @@ Template.ta.events({
     Meteor.call("assignGroup", Template.ta.student().cpmGroup, 1);
   }
 });
+
+Template.taQueueItem.events({
+  'click .approve' : function() {
+    Meteor.call("approveGroup", this.cpmGroup);
+  },
+  'click .disapprove' : function() {
+    Meteor.call("disapproveGroup", this.cpmGroup);
+  }
+});

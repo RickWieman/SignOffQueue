@@ -15,7 +15,7 @@ Meteor.methods({
     Students.update({cpmGroup: cpmGroup}, {$set: {approved: true}});
   },
 
-  rejectGroup: function(cpmGroup) {
+  disapproveGroup: function(cpmGroup) {
     Students.update({cpmGroup: cpmGroup}, {$set: {approved: false}});
   }
 });
