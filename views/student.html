@@ -1,0 +1,29 @@
+<template name="student">
+	{{#if showForm}}
+  <h1>Wij willen afgetekend worden!</h1>
+  <form class="form-horizontal">
+    <div id="loc" class="control-group">
+      <label class="control-label" for="inputLoc">Locatie (cubicle)</label>
+      <div class="controls">
+        <input type="text" id="inputLoc" placeholder="Locatie">
+      </div>
+    </div>
+    <div id="cpm" class="control-group">
+      <label class="control-label" for="inputCpm">CPM Groepsnummer</label>
+      <div class="controls">
+        <input type="text" id="inputCpm" placeholder="Groepsnummer">
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn btn-primary" id="submit">Inschrijven</button>
+      </div>
+    </div>
+  </form>
+  {{/if}}
+
+	<h1>De volgende studenten staan op de wachtrij:</h1>
+	{{#each studentQueue}}
+		<li>{{cpmGroup}}</li>
+	{{/each}}
+</template>
