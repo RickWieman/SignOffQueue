@@ -6,8 +6,35 @@ Template.student.showForm = function() {
   return !Session.get("id");
 }
 
+// Sets the error status a field with an inline error message. Also disables the submit button.
+function setFieldError(field, error) {
+  $(field).addClass('error');
+  $('#submit').prop('disabled', true);
+
+  // Add the error message, or update it when it exists
+  if($(field +' .controls .help-inline').length == 0) {
+    $(field +' .controls').append('<span class="help-inline">' + error + '</span>');
+  }
+  else {
+    $(field +' .controls .help-inline').text(error);
+  }
+}
+
+// Clears the error status of a field; if no fields are erroneous, the submit button is enabled again.
+function clearFieldError(field) {
+  $(field).removeClass('error');
+  $(field +' .controls .help-inline').remove();
+
+  // If all fields are correct, enable submit button
+  if($('.form-horizontal .error').length == 0) {
+    $('#submit').prop('disabled', false);
+  }
+}
+
 Template.student.events({
-  'click #submit' : function () {
+  'click #submit' : function (event) {
+    event.preventDefault();
+
     // template data, if any, is available in 'this'
     var location = $('#inputLoc').val();
     var cpmGroup = $('#inputCpm').val();
@@ -23,25 +50,25 @@ Template.student.events({
           } 
         });
       }
-    } else {
+    }
+    else {
+      setFieldError('#cpm', 'Dit veld is verplicht.');
+      setFieldError('#loc', 'Dit veld is verplicht.');
       console.log("Input not valid: %s %s", location, cpmGroup);
     }
+  },
+  'keyup #inputLoc' : function() {
+    clearFieldError('#loc');
   },
   'keyup #inputCpm' : function() {
     var cpmGroup = $('#inputCpm').val();
     var results = Students.find({ cpmGroup: cpmGroup }).fetch();
 
     if(results.length != 0) {
-      if(!$('#cpm').hasClass('error')) {
-        $('#cpm').addClass('error');
-        $('#cpm .controls').append('<span class="help-inline">CPM groep is al ingeschreven!</span>');
-        $('#submit').prop('disabled', true);
-      }
+      setFieldError('#cpm', 'Deze groep is al ingeschreven!');
     }
     else {
-      $('#cpm').removeClass('error');
-      $('#cpm .controls .help-inline').remove();
-      $('#submit').prop('disabled', false);
+      clearFieldError('#cpm');
     }
   }
 });
