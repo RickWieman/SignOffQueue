@@ -6,6 +6,17 @@ Template.student.showForm = function() {
   return !Session.get("id");
 }
 
+Template.student.highlightGroup = function() {
+  var currentGroup = Session.get("group");
+
+  if(currentGroup == this.cpmGroup) {
+    return '<strong>' + this.cpmGroup + '</strong>';
+  }
+  else {
+    return this.cpmGroup;
+  }
+}
+
 // Sets the error status a field with an inline error message. Also disables the submit button.
 function setFieldError(field, error) {
   $(field).addClass('error');
@@ -47,6 +58,7 @@ Template.student.events({
           else {
             console.log("Group added with id: %s", result)
             Session.set("id", result);
+            Session.set("group", cpmGroup);
           } 
         });
       }
