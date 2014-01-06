@@ -1,5 +1,11 @@
 Template.student.studentQueue = function() {
-  return Students.find({ assistant: {$exists: false} });
+  var data = Students.find({ assistant: {$exists: false} });
+  
+  if(data.count() > 0) {
+    return data;
+  }
+  
+  return false;
 }
 
 Template.student.showForm = function() {

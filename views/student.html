@@ -22,8 +22,16 @@
   </form>
   {{/if}}
 
+  {{#if studentQueue}}
 	<h1>De volgende CPM-groepen staan op de wachtrij:</h1>
+
+  <ul>
 	{{#each studentQueue}}
     <li>{{{highlightGroup}}}</li>
   {{/each}}
+  </ul>
+
+  {{else}}
+  <h1>Er zijn geen wachtenden. Wees de eerste! :)</h1>
+  {{/if}}
 </template>
