@@ -32,9 +32,11 @@ Template.student.events({
     var results = Students.find({ cpmGroup: cpmGroup }).fetch();
 
     if(results.length != 0) {
-      $('#cpm').addClass('error');
-      $('#cpm .controls').append('<span class="help-inline">CPM groep is al ingeschreven!</span>');
-      $('#submit').prop('disabled', true);
+      if(!$('#cpm').hasClass('error')) {
+        $('#cpm').addClass('error');
+        $('#cpm .controls').append('<span class="help-inline">CPM groep is al ingeschreven!</span>');
+        $('#submit').prop('disabled', true);
+      }
     }
     else {
       $('#cpm').removeClass('error');
