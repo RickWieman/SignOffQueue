@@ -9,6 +9,19 @@
 </body>
 
 <template name="openingPage">
-  <input type="button" class="btn" id="ta" value="TA" /> <input type="button" class="btn" id="student" value="Student" />
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="#">Sign Off Queue</a>
+				<ul class="nav">
+					{{#each menuItems}}
+						{{{listMenuItems}}}
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+	</div>
+
+  <!-- <input type="button" class="btn" id="ta" value="TA" /> <input type="button" class="btn" id="student" value="Student" /> -->
   {{{showContent}}}
 </template>
