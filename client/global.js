@@ -1,7 +1,9 @@
 Template.openingPage.showContent = function() {
-  var template = (!Session.get('template') ? 'student' : Session.get('template'));
-
-  return Template[template]();
+	if(!Session.get('template')) {
+		Session.set('template', 'student');
+	}
+  
+  	return Template[Session.get('template')]();
 }
 
 Template.openingPage.menuItems = function() {
