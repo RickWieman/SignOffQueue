@@ -1,14 +1,29 @@
-Template.ta.student = function() {
+Template.taNext.loggedIn = function() {
+  return Session.get("ta");
+}
+
+Template.taNext.student = function() {
   return Students.findOne({ assistant: {$exists: false}});
 }
 
-Template.ta.queue = function() {
+Template.taNext.queue = function() {
   return Students.find({ assistant: 1 });
 }
 
-Template.ta.events({
+Template.taLogin.events({
+  'click #submit': function() {
+    if(Meteor.call('login', $("#inputUser").val(), $("#inputPass").val())) {
+      Session.set("ta", $("#inputUser").val());
+    }
+    else {
+      console.log("Login failed.");
+    }
+  }
+});
+
+Template.taNext.events({
   'click #accept' : function () {
-    Meteor.call("assignGroup", Template.ta.student().cpmGroup, 1);
+    Meteor.call("assignGroup", Template.taNext.student().cpmGroup, 1);
   }
 });
 

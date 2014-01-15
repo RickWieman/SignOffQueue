@@ -17,5 +17,9 @@ Meteor.methods({
 
   disapproveGroup: function(cpmGroup) {
     Students.update({cpmGroup: cpmGroup}, {$set: {approved: false}});
+  },
+
+  login: function(user, pass) {
+    return false;
   }
 });
