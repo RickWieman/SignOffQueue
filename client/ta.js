@@ -1,4 +1,4 @@
-Template.taNext.loggedIn = function() {
+Template.ta.loggedIn = function() {
   return Session.get("ta");
 }
 
@@ -11,13 +11,14 @@ Template.taNext.queue = function() {
 }
 
 Template.taLogin.events({
-  'click #submit': function() {
-    if(Meteor.call('login', $("#inputUser").val(), $("#inputPass").val())) {
-      Session.set("ta", $("#inputUser").val());
-    }
-    else {
-      console.log("Login failed.");
-    }
+  'click #submit': function(event) {
+    event.preventDefault();
+
+    Meteor.call('login', $("#inputUser").val(), $("#inputPass").val(), function (error, result) {
+      if(result) {
+        Session.set("ta", result);
+      }
+    });
   }
 });
 

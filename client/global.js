@@ -6,9 +6,7 @@ Template.openingPage.showContent = function() {
   	return Template[Session.get('template')]();
 }
 
-Template.openingPage.menuItems = function() {
-	return ['TA', 'Student'];
-}
+Template.openingPage.menuItems = ['TA', 'Student'];
 
 Template.openingPage.listMenuItems = function() {
 	if(this.toLowerCase() == Session.get('template')) {

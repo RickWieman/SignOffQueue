@@ -20,6 +20,10 @@ Meteor.methods({
   },
 
   login: function(user, pass) {
-    return false;
+    var users = {'Rick': '123', 'Sander': '456'};
+
+    if(users[user] == pass) {
+      return user;
+    }
   }
 });
