@@ -1,16 +1,15 @@
-Template.ta.student = function() {
-  return Students.findOne({ assistant: Meteor.user().username, approved: {$exists: false}});
-}
-
-Template.ta.studentsAvailable = function() {
-  if(!Template.ta.student()) {
-    return Students.find({ assistant: {$exists: false}, approved: {$exists: false} }).count();
+Meteor.autorun(function() {
+  if(Meteor.user() && Session.get("ready")) {
+    if(!Students.findOne({ assistant: Meteor.user().username, approved: {$exists: false} })) {
+      if(Students.find({assistant: {$exists: false}}).count() > 0) {
+        Meteor.call('assignGroup', Meteor.user().username);
+      }
+    }
   }
-  return false;
-}
+});
 
-Template.ta.assignToMe = function() {
-  Meteor.call('assignGroup', Meteor.user().username);
+Template.ta.student = function() {
+  return Students.findOne({ assistant: Meteor.user().username, approved: {$exists: false} });
 }
 
 Template.ta.events({
