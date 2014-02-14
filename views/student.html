@@ -1,6 +1,6 @@
 <template name="student">
 	{{#if showForm}}
-  <h1>Wij willen afgetekend worden!</h1>
+  <h2>Wij willen afgetekend worden!</h2>
   <form class="form-horizontal">
     <div id="loc" class="control-group">
       <label class="control-label" for="inputLoc">Locatie (cubicle)</label>
@@ -23,7 +23,7 @@
   {{/if}}
 
   {{#if studentQueue}}
-	<h1>De volgende CPM-groepen staan op de wachtrij:</h1>
+	<h2>De volgende CPM-groepen staan op de wachtrij:</h2>
 
   <ul>
 	{{#each studentQueue}}
@@ -32,6 +32,6 @@
   </ul>
 
   {{else}}
-  <h1>Er zijn geen wachtenden. Wees de eerste! :)</h1>
+  <h2>Er zijn geen wachtenden. Wees de eerste! :)</h2>
   {{/if}}
 </template>

@@ -1,13 +1,5 @@
 <template name="ta">
-  {{#if loggedIn}}
-    {{> taNext}}
-  {{else}}
-    {{> taLogin}}
-  {{/if}}
-</template>
-
-<template name="taNext">
-	<h1>De volgende CPM-groep wil afgetekend worden:</h1>
+	<h2>De volgende CPM-groep wil afgetekend worden:</h2>
 	{{student.cpmGroup}}
 
 	<input type="button" class="btn" id="accept" value="Aannemen" />
@@ -33,27 +25,4 @@
     <td><a class="approve">Goedkeuren</a></td>
     <td><a class="disapprove">Afkeuren</a></td>
   </tr>
-</template>
-
-<template name="taLogin">
-  <h1>Hoi, inloggen graag.</h1>
-  <form class="form-horizontal">
-    <div id="loc" class="control-group">
-      <label class="control-label" for="inputUser">Assistent</label>
-      <div class="controls">
-        <input type="text" id="inputUser" placeholder="Assistent">
-      </div>
-    </div>
-    <div id="cpm" class="control-group">
-      <label class="control-label" for="inputPass">Wachtwoord</label>
-      <div class="controls">
-        <input type="password" id="inputPass" placeholder="Wachtwoord">
-      </div>
-    </div>
-    <div class="control-group">
-      <div class="controls">
-        <button class="btn btn-primary" id="submit">Aanmelden</button>
-      </div>
-    </div>
-  </form>
 </template>

@@ -17,13 +17,5 @@ Meteor.methods({
 
   disapproveGroup: function(cpmGroup) {
     Students.update({cpmGroup: cpmGroup}, {$set: {approved: false}});
-  },
-
-  login: function(user, pass) {
-    var users = {'Rick': '123', 'Sander': '456'};
-
-    if(users[user] == pass) {
-      return user;
-    }
   }
 });
