@@ -1,16 +1,10 @@
 <template name="ta">
   {{#if student}}
-    <h2>Je mag naar...</h2>
+    <h2>Je mag naar groepje...</h2>
     <p><strong>{{student.cpmGroup}}</strong>, te vinden in <strong>{{student.location}}</strong>!</p>
 
     <input type="button" class="btn btn-success" id="accept" value="Goedkeuren" /> <input type="button" class="btn btn-danger" id="reject" value="Afkeuren" />
   {{else}}
     <h2>Je mag even uitrusten ;)</h2>
-
-    {{#if studentsAvailable}}
-      Maar niet lang meer...
-
-      {{{assignToMe}}}
-    {{/if}}
   {{/if}}
 </template>
