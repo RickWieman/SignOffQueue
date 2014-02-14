@@ -9,3 +9,5 @@ insecure
 preserve-inputs
 bootstrap
 less
+accounts-password
+accounts-ui
