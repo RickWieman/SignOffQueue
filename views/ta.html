@@ -1,9 +1,9 @@
 <template name="ta">
 	{{#if student}}
-    <h2>Je mag naar de volgende CPM-groep:</h2>
-    {{student.cpmGroup}}, te vinden op {{student.location}}
+    <h2>Ja {{currentUser.username}}, je mag naar...</h2>
+    {{student.cpmGroup}}, te vinden in {{student.location}}!
 
-    <input type="button" class="btn" id="accept" value="Goedkeuren" /> <input type="button" class="btn" id="accept" value="Afkeuren" />
+    <input type="button" class="btn" id="accept" value="Goedkeuren" /> <input type="button" class="btn" id="reject" value="Afkeuren" />
   {{else}}
     <h2>Jippie. Geen werk!</h2>
   {{/if}}

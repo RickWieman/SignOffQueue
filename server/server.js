@@ -7,13 +7,15 @@ Meteor.startup(function () {
 
 Meteor.methods({
   assignGroup: function(ta) {
-    if(Students.find({ assistant: ta, approved: {$exists: false}}).fetch().length == 0) {
-      var updateGroup = Students.findOne({ assistant: {$exists: false}, approved: {$exists: false} }).cpmGroup;
-      Students.update({ cpmGroup: updateGroup }, {$set: {assistant: ta}});
-    }
-    var group = Students.findOne({ assistant: ta, approved: {$exists: false}});
+    var existing = Students.findOne({ assistant: ta, approved: {$exists: false}});
 
-    return group;
+    if(!existing) {
+      var updateGroup = Students.findOne({ assistant: {$exists: false}, approved: {$exists: false} });
+
+      if(updateGroup) {
+        Students.update({ cpmGroup: updateGroup.cpmGroup }, {$set: {assistant: ta}});
+      }
+    }
   },
 
   insertGroup: function(cpmGroup, location) {
