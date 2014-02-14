@@ -1,5 +1,12 @@
 <template name="student">
 	{{#if showForm}}
+    {{> student_signin}}
+  {{/if}}
+
+  {{> student_queue}}
+</template>
+
+<template name="student_signin">
   <h2>Wij willen afgetekend worden!</h2>
   <form class="form-horizontal">
     <div id="loc" class="control-group">
@@ -20,18 +27,18 @@
       </div>
     </div>
   </form>
-  {{/if}}
+</template>
 
-  {{#if studentQueue}}
-	<h2>De volgende CPM-groepen staan op de wachtrij:</h2>
+<template name="student_queue">
+  <h2>Wachtrij</h2>
 
-  <ul>
-	{{#each studentQueue}}
-    <li>{{{highlightGroup}}}</li>
-  {{/each}}
-  </ul>
-
+  {{#if queue}}
+    <ul>
+    {{#each queue}}
+      <li>{{{highlightGroup}}}</li>
+    {{/each}}
+    </ul>
   {{else}}
-  <h2>Er zijn geen wachtenden. Wees de eerste! :)</h2>
+    <em>Er zijn geen momenteel geen wachtenden :)</em>
   {{/if}}
 </template>

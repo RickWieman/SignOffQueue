@@ -1,4 +1,8 @@
-Template.student.studentQueue = function() {
+Template.student.showForm = function() {
+  return !Session.get("id") && !Meteor.user();
+}
+
+Template.student_queue.queue = function() {
   var data = Students.find({ assistant: {$exists: false} });
   
   if(data.count() > 0) {
@@ -8,11 +12,7 @@ Template.student.studentQueue = function() {
   return false;
 }
 
-Template.student.showForm = function() {
-  return !Session.get("id");
-}
-
-Template.student.highlightGroup = function() {
+Template.student_queue.highlightGroup = function() {
   var currentGroup = Session.get("group");
 
   if(currentGroup == this.cpmGroup) {
@@ -22,6 +22,8 @@ Template.student.highlightGroup = function() {
     return this.cpmGroup;
   }
 }
+
+
 
 // Sets the error status a field with an inline error message. Also disables the submit button.
 function setFieldError(field, error) {
@@ -48,7 +50,7 @@ function clearFieldError(field) {
   }
 }
 
-Template.student.events({
+Template.student_signin.events({
   'click #submit' : function (event) {
     event.preventDefault();
 
