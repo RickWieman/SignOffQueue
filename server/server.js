@@ -6,19 +6,21 @@ Meteor.startup(function () {
 });
 
 Meteor.methods({
-  assignGroup: function(cpmGroup, ta) {
-    Students.update({cpmGroup: cpmGroup}, {$set: {assistant: ta}});
+  assignGroup: function(ta) {
+    if(Students.find({ assistant: ta, approved: {$exists: false}}).fetch().length == 0) {
+      var updateGroup = Students.findOne({ assistant: {$exists: false}, approved: {$exists: false} }).cpmGroup;
+      Students.update({ cpmGroup: updateGroup }, {$set: {assistant: ta}});
+    }
+    var group = Students.findOne({ assistant: ta, approved: {$exists: false}});
+
+    return group;
   },
 
-  insertGroup: function(cpmGroup, location, callback) {
+  insertGroup: function(cpmGroup, location) {
     return Students.insert({cpmGroup: cpmGroup, location: location});
   },
 
-  approveGroup: function(cpmGroup) {
-    Students.update({cpmGroup: cpmGroup}, {$set: {approved: true}});
-  },
-
-  disapproveGroup: function(cpmGroup) {
-    Students.update({cpmGroup: cpmGroup}, {$set: {approved: false}});
+  reviewGroup: function(cpmGroup, result) {
+    Students.update({cpmGroup: cpmGroup}, {$set: {approved: result}});
   }
 });

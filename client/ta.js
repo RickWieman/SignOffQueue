@@ -1,22 +1,29 @@
-Template.ta.student = function() {
-  return Students.findOne({ assistant: {$exists: false}});
+// Assignment op server; client (TA) vraagt aan server om de groep;
+// server geeft groep en assignt hem aan client (TA) of geeft reeds geassignde groep
+
+function getGroup() {
+  Meteor.call('assignGroup', Session.get('ta'), function (error, result) {
+    if(result) {
+      Session.set('nextGroup', result);
+    }
+  });
 }
 
-Template.ta.queue = function() {
-  return Students.find({ assistant: 1 });
+Template.ta.student = function() {
+  return Session.get('nextGroup');
 }
 
 Template.ta.events({
-  'click #accept' : function () {
-    Meteor.call("assignGroup", Template.taNext.student().cpmGroup, 1);
-  }
-});
+  'click #accept' : function (event) {
+    event.preventDefault();
 
-Template.taQueueItem.events({
-  'click .approve' : function() {
-    Meteor.call("approveGroup", this.cpmGroup);
+    Meteor.call("reviewGroup", Template.ta.student().cpmGroup, true);
+    getGroup();
   },
-  'click .disapprove' : function() {
-    Meteor.call("disapproveGroup", this.cpmGroup);
+  'click #reject' : function (event) {
+    event.preventDefault();
+
+    Meteor.call("reviewGroup", Template.ta.student().cpmGroup, false);
+    getGroup();
   }
 });

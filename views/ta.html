@@ -1,28 +1,10 @@
 <template name="ta">
-	<h2>De volgende CPM-groep wil afgetekend worden:</h2>
-	{{student.cpmGroup}}
+	{{#if student}}
+    <h2>Je mag naar de volgende CPM-groep:</h2>
+    {{student.cpmGroup}}, te vinden op {{student.location}}
 
-	<input type="button" class="btn" id="accept" value="Aannemen" />
-  <table class="table table-striped" id="queue">
-    <thead>
-      <th>Groep</th>
-      <th>Locatie</th>
-      <th></th>
-      <th></th>
-    </thead>
-    <tbody>
-      {{#each queue}}
-        {{> taQueueItem}}
-      {{/each}}
-    </tbody>
-  </table>
-</template>
-
-<template name="taQueueItem">
-  <tr class="queue-item">
-    <td>{{cpmGroup}}</td>
-    <td>{{location}}</td>
-    <td><a class="approve">Goedkeuren</a></td>
-    <td><a class="disapprove">Afkeuren</a></td>
-  </tr>
+    <input type="button" class="btn" id="accept" value="Goedkeuren" /> <input type="button" class="btn" id="accept" value="Afkeuren" />
+  {{else}}
+    <h2>Jippie. Geen werk!</h2>
+  {{/if}}
 </template>
