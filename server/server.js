@@ -23,10 +23,10 @@ Meteor.methods({
   },
 
   insertGroup: function(cpmGroup, location) {
-    return Students.insert({cpmGroup: cpmGroup, location: location});
+    return Students.insert({cpmGroup: parseInt(cpmGroup), location: location});
   },
 
   reviewGroup: function(cpmGroup, result) {
-    Students.update({cpmGroup: cpmGroup}, {$set: {approved: result}});
+    Students.update({cpmGroup: parseInt(cpmGroup)}, {$set: {approved: result}});
   }
 });
