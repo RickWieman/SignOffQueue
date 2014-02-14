@@ -1,4 +1,3 @@
-Accounts.config({
-	forbidClientAccountCreation: true,
-	loginExpirationInDays: null
+Accounts.ui.config({
+	passwordSignupFields: 'USERNAME_AND_EMAIL'
 });

@@ -1,5 +1,8 @@
 Meteor.startup(function () {
-  // code to run on server at startup
+  Accounts.config({
+    forbidClientAccountCreation: false,
+    loginExpirationInDays: null
+  });
 });
 
 Meteor.methods({
