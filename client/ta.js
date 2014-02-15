@@ -26,3 +26,19 @@ Template.ta.events({
     Meteor.call('assignGroup', Meteor.user().username);
   }
 });
+
+Template.ta_overview.group = function() {
+  return Students.find({}, {sort: ["cpmGroup", "asc"]});
+}
+
+Template.ta_overview_group.result = function() {
+  if(this.approved === true) {
+    return '<span class="label label-success">Goedgekeurd</span>';
+  }
+  else if(this.approved === false) {
+    return '<span class="label label-important">Afgekeurd</span>';
+  }
+  else {
+    return '<span class="label">Onbekend</span>';
+  }
+}

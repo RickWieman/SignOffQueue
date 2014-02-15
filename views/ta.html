@@ -8,3 +8,26 @@
     <h2>Je mag even uitrusten ;)</h2>
   {{/if}}
 </template>
+
+<template name="ta_overview">
+	<table class="table table-striped" id="overview">
+    <thead>
+      <th>Groep</th>
+      <th>SA</th>
+      <th>Resultaat</th>
+    </thead>
+    <tbody>
+      {{#each group}}
+        {{> ta_overview_group}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="ta_overview_group">
+  <tr class="queue-item">
+    <td>{{cpmGroup}}</td>
+    <td>{{assistant}}</td>
+    <td>{{{result}}}</td>
+  </tr>
+</template>
