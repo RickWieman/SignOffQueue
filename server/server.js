@@ -1,3 +1,5 @@
+Students = new Meteor.Collection("students");
+
 Meteor.startup(function () {
   Accounts.config({
     forbidClientAccountCreation: false,

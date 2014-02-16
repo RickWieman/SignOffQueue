@@ -1,5 +1,5 @@
 Meteor.autorun(function() {
-  if(Meteor.user() && Session.get("ready")) {
+  if(Meteor.user()) {
     if(!Students.findOne({ assistant: Meteor.user().username, approved: {$exists: false} })) {
       if(Students.find({assistant: {$exists: false}}).count() > 0) {
         Meteor.call('assignGroup', Meteor.user().username);
