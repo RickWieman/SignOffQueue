@@ -56,7 +56,7 @@ Template.student_signin.events({
 
     // template data, if any, is available in 'this'
     var location = $('#inputLoc').val();
-    var cpmGroup = $('#inputCpm').val();
+    var cpmGroup = parseInt($('#inputCpm').val());
 
     if(location && cpmGroup) {
       if(Students.find({ cpmGroup: cpmGroup }).fetch().length == 0) {
@@ -81,7 +81,7 @@ Template.student_signin.events({
     clearFieldError('#loc');
   },
   'keyup #inputCpm' : function() {
-    var cpmGroup = $('#inputCpm').val();
+    var cpmGroup = parseInt($('#inputCpm').val());
     var results = Students.find({ cpmGroup: cpmGroup }).fetch();
 
     if(results.length != 0) {
