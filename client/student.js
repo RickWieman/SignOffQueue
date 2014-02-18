@@ -1,5 +1,5 @@
 Template.student.showForm = function() {
-  return !Session.get("id") && !Meteor.user();
+  return !Session.get("group") && !Meteor.user();
 }
 
 Template.student_queue.queue = function() {
@@ -22,8 +22,6 @@ Template.student_queue.highlightGroup = function() {
     return this.cpmGroup;
   }
 }
-
-
 
 // Sets the error status a field with an inline error message. Also disables the submit button.
 function setFieldError(field, error) {
@@ -50,45 +48,75 @@ function clearFieldError(field) {
   }
 }
 
+function testCPM(value) {
+  var exp = /^[0-9]{1,3}$/;
+
+  return exp.test(value);
+}
+
+function testLocation(value) {
+  var exp = /^([0-9a-zA-Z\s\.\,])+$/;
+
+  return exp.test(value);
+}
+
+function evaluateCPM() {
+  var cpmGroup = $('#inputCpm').val();
+  var results = Students.find({ cpmGroup: parseInt(cpmGroup) }).fetch();
+
+  if(!cpmGroup && !testCPM(cpmGroup)) {
+    setFieldError('#cpm', 'Dit veld is verplicht.');
+  }
+  else if(results.length != 0) {
+    setFieldError('#cpm', 'Deze groep is al ingeschreven!');
+  }
+  else if(!testCPM(cpmGroup)) {
+    setFieldError('#cpm', 'Controleer of dit een geldig groepsnummer is.');
+  }
+  else {
+    clearFieldError('#cpm');
+  }
+}
+
+function evaluateLocation() {
+  var location = $('#inputLoc').val();
+
+  if(!location && !testLocation(location)) {
+    setFieldError('#loc', 'Dit veld is verplicht.');
+  }
+  else if(!testLocation(location)) {
+    setFieldError('#loc', 'Controleer of dit een geldige locatie is.');
+  }
+  else {
+    clearFieldError('#loc');
+  }
+}
+
 Template.student_signin.events({
   'click #submit' : function (event) {
     event.preventDefault();
 
-    // template data, if any, is available in 'this'
     var location = $('#inputLoc').val();
-    var cpmGroup = parseInt($('#inputCpm').val());
+    var cpmGroup = $('#inputCpm').val();
 
-    if(location && cpmGroup) {
+    if(testCPM(cpmGroup) && testLocation(location)) {
+      cpmGroup = parseInt(cpmGroup);
+
       if(Students.find({ cpmGroup: cpmGroup }).fetch().length == 0) {
         Meteor.call("insertGroup", cpmGroup, location, function(error, result){
-          if (error)
-            console.log(error);
-          else {
-            console.log("Group added with id: %s", result)
-            Session.set("id", result);
+          if(result) {
             Session.set("group", cpmGroup);
-          } 
+          }
         });
       }
     }
     else {
-      setFieldError('#cpm', 'Dit veld is verplicht.');
-      setFieldError('#loc', 'Dit veld is verplicht.');
-      console.log("Input not valid: %s %s", location, cpmGroup);
+      evaluateCPM();
+      evaluateLocation();
     }
   },
-  'keyup #inputLoc' : function() {
-    clearFieldError('#loc');
-  },
-  'keyup #inputCpm' : function() {
-    var cpmGroup = parseInt($('#inputCpm').val());
-    var results = Students.find({ cpmGroup: cpmGroup }).fetch();
-
-    if(results.length != 0) {
-      setFieldError('#cpm', 'Deze groep is al ingeschreven!');
-    }
-    else {
-      clearFieldError('#cpm');
-    }
-  }
+  'keyup #inputLoc' : evaluateLocation,
+  'blur #inputLoc' : evaluateLocation,
+  'keyup #inputCpm' : evaluateCPM,
+  'blur #inputCpm' : evaluateCPM
 });
