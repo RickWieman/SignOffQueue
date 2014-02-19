@@ -1,4 +1,9 @@
 <template name="ta">
+  <ul class="nav nav-pills">
+    <li><a href="#">Overzicht</a></li>
+    <li class="active"><a href="#">Aftekenen</a></li>
+  </ul>
+  
   {{#if student}}
     <h2>Je mag naar groepje...</h2>
     <p><strong>{{student.cpmGroup}}</strong>, te vinden in <strong>{{student.location}}</strong>!</p>
@@ -7,6 +12,9 @@
   {{else}}
     <h2>Je mag even uitrusten ;)</h2>
   {{/if}}
+
+  <hr />
+  {{> student_queue}}
 </template>
 
 <template name="ta_overview">

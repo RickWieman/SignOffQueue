@@ -1,21 +1,24 @@
 <head>
-  <title>SignOffQueue</title>
+  <title>Aftekenen</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no" />
 </head>
 
 <body>
   <div class="container">
-  	<div style="float:right;">
-		{{loginButtons align="right"}}
-	</div>
+    <div style="float: right;">
+      {{#unless currentUser}}
+        SA?
+      {{/unless}}
 
-  	<h1>Sign Off Queue</h1>
-
+      {{loginButtons align="right"}}
+    </div>
+    
+    <h1 class="muted">Aftekenen</h1>
+    
   	{{#if currentUser}}
   		{{> ta}}
-
-  		<hr />
+    {{else}}
+      {{> student }}
   	{{/if}}
-
-    {{> student }}
   </div>
 </body>
