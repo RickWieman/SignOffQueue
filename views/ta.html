@@ -1,20 +1,26 @@
 <template name="ta">
   <ul class="nav nav-pills">
-    <li><a href="#">Overzicht</a></li>
-    <li class="active"><a href="#">Aftekenen</a></li>
+    <li {{#if show_overview}} class="active" {{/if}}><a href="#" id="overview">Overzicht</a></li>
+    <li {{#unless show_overview}} class="active" {{/unless}}><a href="#" id="signoff">Aftekenen</a></li>
   </ul>
-  
-  {{#if student}}
-    <h2>Je mag naar groepje...</h2>
-    <p><strong>{{student.cpmGroup}}</strong>, te vinden in <strong>{{student.location}}</strong>!</p>
 
-    <input type="button" class="btn btn-success" id="accept" value="Goedkeuren" /> <input type="button" class="btn btn-danger" id="reject" value="Afkeuren" />
+  {{#if show_overview}}
+    {{> ta_overview}}
   {{else}}
-    <h2>Je mag even uitrusten ;)</h2>
-  {{/if}}
 
-  <hr />
-  {{> student_queue}}
+    {{#if student}}
+      <h2>Je mag naar groepje...</h2>
+      <p><strong>{{student.cpmGroup}}</strong>, te vinden in <strong>{{student.location}}</strong>!</p>
+
+      <input type="button" class="btn btn-success" id="accept" value="Goedkeuren" /> <input type="button" class="btn btn-danger" id="reject" value="Afkeuren" />
+    {{else}}
+      <h2>Je mag even uitrusten ;)</h2>
+    {{/if}}
+
+    <hr />
+    {{> student_queue}}
+
+  {{/if}}
 </template>
 
 <template name="ta_overview">
@@ -36,6 +42,16 @@
   <tr class="queue-item">
     <td>{{cpmGroup}}</td>
     <td>{{assistant}}</td>
-    <td>{{{result}}}</td>
+    <td>
+      {{#if approvalUndefined}}
+        <span class="label">Onbekend</span>
+      {{else}}
+        {{#if approved}}
+          <span class="label label-success">Goedgekeurd</span>
+        {{else}}
+          <span class="label label-important">Afgekeurd</span>
+        {{/if}}
+      {{/if}}
+    </td>
   </tr>
 </template>

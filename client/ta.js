@@ -12,7 +12,19 @@ Template.ta.student = function() {
   return Students.findOne({ assistant: Meteor.user().username, approved: {$exists: false} });
 }
 
+Template.ta.show_overview = function () {
+  return Session.get("show_overview");
+}
+
 Template.ta.events({
+  'click #overview' : function (event) {
+    Session.set("show_overview", true);
+  },
+
+  'click #signoff' : function (event) {
+    Session.set("show_overview", false);
+  },
+
   'click #accept' : function (event) {
     event.preventDefault();
 
@@ -31,14 +43,6 @@ Template.ta_overview.group = function() {
   return Students.find({}, {sort: ["cpmGroup", "asc"]});
 }
 
-Template.ta_overview_group.result = function() {
-  if(this.approved === true) {
-    return '<span class="label label-success">Goedgekeurd</span>';
-  }
-  else if(this.approved === false) {
-    return '<span class="label label-important">Afgekeurd</span>';
-  }
-  else {
-    return '<span class="label">Onbekend</span>';
-  }
+Template.ta_overview_group.approvalUndefined = function() {
+  return (this.approved === undefined);
 }
